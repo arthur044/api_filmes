@@ -13,3 +13,28 @@ values (?, ?, ?, ?, ?)`;
   let idFilme = info.insertId;
   return idFilme;
 }
+
+export async function consultarFilme(nome) {
+  let comando = `
+  select id_filme,
+            nm_filme  nome,
+            vl_avaliacao avaliacao,
+            dt_lancamento lancamento,
+            bt_disponivel
+          from tb_filmes
+          where nm_filme like ?
+  `;
+  let resposta = await con.query(comando, ["%" + nome + "%"]);
+  let registros = resposta[0];
+  return registros;
+}
+
+
+export async function consultarAllFilmes(){
+    let comando = `
+    select * from tb_filmes
+    `
+  let resposta = await con.query(comando);
+  let registros = resposta[0];
+  return registros;
+}
